@@ -1,16 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import re
-import os
-import numpy
-import time
-import sys, json
+import json
 
 page = 1
 list = []
 pageurl = []
-for j in range(1,68):
+for j in range(1,2):
     url = 'https://ifoodie.tw/explore/%E5%8F%B0%E5%8D%97%E5%B8%82/list?page={}'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'
@@ -21,7 +17,7 @@ for j in range(1,68):
 
     soup = BeautifulSoup(html, 'html.parser')
     
-    titlelist = soup.find_all('a', class_="jsx-2133253768 click-tracker")
+    titlelist = soup.find_all('a', class_="jsx-3440511973 click-tracker")
     for title in titlelist:
         urlshop = "https://ifoodie.tw" + title.get('href')
         pageurl.append(urlshop)
@@ -56,4 +52,4 @@ shop_df = pd.DataFrame(slicelist)
 shop_df.index = shop_df.index + 1  # 自訂索引值
 shop_df.columns = ["店名","作者", "日期", "評論"]
 # print(shop_df)
-shop_df.to_csv('C:/Users/Jeffery1009/Desktop/爬蟲QQ/愛食記評論.csv',encoding="utf_8_sig")
+shop_df.to_csv('C:{路徑名稱}/{檔案名稱}.csv',encoding="utf_8_sig")
